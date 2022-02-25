@@ -1,4 +1,4 @@
-public class Variable {
+public class Variable implements Qualifiable{
 
     private String name;
 

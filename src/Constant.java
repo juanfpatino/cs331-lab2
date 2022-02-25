@@ -1,4 +1,4 @@
-public class Constant {
+public class Constant implements Qualifiable {
 
     private String name;
 

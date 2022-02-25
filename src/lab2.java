@@ -24,8 +24,15 @@ public class lab2 {
 
     public static boolean resolution(Scanner s){ //main resolution function
 
+        Clause[] KB; //knowledge base
+
+        //todo: decode .cnf files
+
         return true;
 
     }
+
+
+
 
 }
