@@ -105,6 +105,7 @@ public class lab2 {
                         pred.qualify(KB.find(S.toString()));
                         S = new StringBuilder();
 
+                        //now ready to add another qualifiable
 
                     } else if (c == ')') {
 
