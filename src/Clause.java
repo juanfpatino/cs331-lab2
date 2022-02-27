@@ -1,8 +1,14 @@
 public class Clause {
 
-    private Predicate[] clause;
+    private Predicate[] clause; //disjunction of predicates
 
     public Clause(Predicate[] clause){
+
+        this.clause = clause;
+
+    }
+
+    public void setClause(Predicate[] clause){
 
         this.clause = clause;
 

@@ -1,13 +1,21 @@
+import java.util.ArrayList;
+
 public class Predicate {
 
-    private String name;
+    public final String name;
     private int n; //n-ary predicate
     private boolean positive = true;
-    private Qualifiable[] terms;
+    private ArrayList<Qualifiable> terms;
 
     public Predicate(String name){
 
         this.name = name;
+
+    }
+
+    public String getName(){
+
+        return this.name;
 
     }
 
@@ -17,10 +25,9 @@ public class Predicate {
 
     }
 
-    public void qualify(Qualifiable[] q){
+    public void qualify(Qualifiable q){
 
-        this.terms = q;
-        this.n = this.terms.length;
+        this.terms.add(q);
 
     }
 
@@ -39,7 +46,7 @@ public class Predicate {
 
             for (int i = 0; i < n; i++) {
 
-                s.append(terms[i].getName());
+                s.append(terms.get(i).getName());
 
                 if(i != n - 1)s.append(","); //if not last term, add a comma separating
 
