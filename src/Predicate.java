@@ -5,7 +5,7 @@ public class Predicate {
     public final String name;
     private int n; //n-ary predicate
     private boolean positive = true;
-    private ArrayList<Qualifiable> terms;
+    private final ArrayList<Qualifiable> terms = new ArrayList<>();
 
     public Predicate(String name){
 
@@ -28,6 +28,7 @@ public class Predicate {
     public void qualify(Qualifiable q){
 
         this.terms.add(q);
+        this.n++;
 
     }
 

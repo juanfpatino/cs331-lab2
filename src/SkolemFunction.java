@@ -1,11 +1,11 @@
 public class SkolemFunction implements Qualifiable{
 
     private int num;
-    private Qualifiable x; //there exists (this) for all x
+    private Variable x; //there exists (this) for all x
 
     public SkolemFunction(int num){
 
-        this.num = num;
+        this.num = num-48;
 
     }
 
@@ -15,7 +15,7 @@ public class SkolemFunction implements Qualifiable{
 
     }
 
-    public void setX(Qualifiable x){
+    public void setX(Variable x){
 
         this.x = x;
 
@@ -31,6 +31,15 @@ public class SkolemFunction implements Qualifiable{
 
     @Override
     public String toString() {
-        return getName() + "(" + x.getName() + ")";
+        if(x != null){
+
+            return getName() + "(" + x.getName() + ")";
+
+        }
+        else{
+
+            return getName();
+
+        }
     }
 }

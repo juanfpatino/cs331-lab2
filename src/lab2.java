@@ -102,12 +102,33 @@ public class lab2 {
 
                 boolean adding = false; //true if we are adding something to this predicate
 
+                int charIdx = 0;
                 for (char c : word.toCharArray() //add variables/constants/funtions to this prediate
                 ) {
 
                     if (c == '(') {
 
-                        adding = true;
+                        //if this is the inside of a skolem function
+
+
+                        if(String.valueOf(S).contains("SKF")){
+
+                            //variables always two characters long
+
+                            SkolemFunction sk = new SkolemFunction(String.valueOf(S).charAt(3));
+
+                            sk.setX(new Variable(String.valueOf(word.toCharArray()[charIdx+ 2] + "" +  word.toCharArray()[charIdx+3])));
+                            pred.qualify(sk);
+                            adding = false;
+
+                        }
+                        else{
+
+                            adding = true;
+                            continue;
+
+                        }
+
 
                     } else if (c == ',') {
 
@@ -117,6 +138,7 @@ public class lab2 {
                         assert pred != null;
                         pred.qualify(KB.find(S.toString()));
                         S = new StringBuilder();
+                        continue;
 
                         //now ready to add another qualifiable
 
@@ -126,7 +148,6 @@ public class lab2 {
                         assert pred != null;
                         pred.qualify(KB.find(S.toString()));
 
-
                     }
 
                     if (adding) {
@@ -135,7 +156,7 @@ public class lab2 {
 
                     }
 
-
+                    charIdx++;
 
                 }
 
@@ -156,6 +177,8 @@ public class lab2 {
 
             }
         }
+
+        int debug = 69;
     }
 
     private static Predicate findPredicate(KnowledgeBase KB, String word){
