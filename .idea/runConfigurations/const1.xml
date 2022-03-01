@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="const1" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="lab2" />
+    <module name="cs331-lab2" />
+    <option name="PROGRAM_PARAMETERS" value="constants/c01.CNF" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -193,7 +193,7 @@ public class lab2 {
 
             if(word.contains(p.getName())){
 
-                return new Predicate(p.getName());
+                return new Predicate(p.getName()); //maybe don't do this
 
             }
 
