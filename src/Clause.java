@@ -31,7 +31,7 @@ public class Clause {
 
             s.append(clause[i]);
 
-            if(i != clause.length - 1) s.append(",");
+            if(i != clause.length - 1) s.append(", ");
 
         }
 

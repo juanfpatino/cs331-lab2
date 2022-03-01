@@ -26,6 +26,13 @@ public class lab2 {
 
         KnowledgeBase KB = new KnowledgeBase();
 
+        DecodeKB(s, KB);
+
+        return true;
+
+    }
+
+    private static void DecodeKB(Scanner s, KnowledgeBase KB) {
         String ss = s.nextLine();
 
         int lineCount = 0;
@@ -71,10 +78,16 @@ public class lab2 {
         while(ss != null){//add clauses
 
             String[] words = ss.split(" ");
-            if(words[0].equals("Clauses:")) s.nextLine();
+            if(words[0].equals("Clauses:")) {
+
+                ss = s.nextLine();
+                words = ss.split(" ");
+
+            }
 
             Predicate[] p = new Predicate[words.length];
 
+            int predIDX = 0;
             for (String word : words) {
 
                 Predicate pred = findPredicate(KB, word);
@@ -122,16 +135,27 @@ public class lab2 {
 
                     }
 
+
+
                 }
 
+                p[predIDX] = pred;
+                predIDX++;
 
             }
+            KB.addClause(new Clause(p));
 
-            ss = s.nextLine();
+            try{
+
+                ss = s.nextLine();
+
+            }
+            catch(NoSuchElementException n){
+
+                break;
+
+            }
         }
-
-        return true;
-
     }
 
     private static Predicate findPredicate(KnowledgeBase KB, String word){
@@ -139,7 +163,7 @@ public class lab2 {
         for (Predicate p: KB.getPredicates()
              ) {
 
-            if(p.getName().contains(word)){
+            if(word.contains(p.getName())){
 
                 return p;
 
