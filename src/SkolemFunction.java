@@ -1,6 +1,6 @@
 public class SkolemFunction implements Qualifiable{
 
-    private int num;
+    public int num;
     private Variable x; //there exists (this) for all x
 
     public SkolemFunction(int num){

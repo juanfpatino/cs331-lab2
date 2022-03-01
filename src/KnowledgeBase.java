@@ -67,21 +67,21 @@ public class KnowledgeBase {
         for (Variable v: v
              ) {
 
-            if(v.getName().contains(s) || s.contains(v.getName())) return v;
+            if(v.getName().contains(s) || s.contains(v.getName())) return new Variable(v.getName());
 
         }
 
         for (Constant c: c
              ) {
 
-            if(c.getName().contains(s) || s.contains(c.getName())) return c;
+            if(c.getName().contains(s) || s.contains(c.getName())) return new Constant(c.getName());
 
         }
 
         for (SkolemFunction sk: skf
              ) {
 
-            if(sk.getName().contains(s) || s.contains(sk.getName())) return sk;
+            if(sk.getName().contains(s) || s.contains(sk.getName())) return new SkolemFunction(sk.num);
 
         }
 

@@ -65,7 +65,7 @@ public class lab2 {
                 }
                 else{
 
-                    SkolemFunction sk = new SkolemFunction((int)word.charAt(3));
+                    SkolemFunction sk = new SkolemFunction(word.charAt(3)); //this is fixed with ascii math
                     KB.addFunc(sk);
 
                 }
@@ -118,7 +118,7 @@ public class lab2 {
 
                             SkolemFunction sk = new SkolemFunction(String.valueOf(S).charAt(3));
 
-                            sk.setX(new Variable(String.valueOf(word.toCharArray()[charIdx+ 1] + "" +  word.toCharArray()[charIdx+2])));
+                            sk.setX(new Variable((word.toCharArray()[charIdx+ 1] + "" +  word.toCharArray()[charIdx+2])));
                             assert pred != null;
                             pred.qualify(sk);
                             adding = false;
@@ -193,7 +193,7 @@ public class lab2 {
 
             if(word.contains(p.getName())){
 
-                return p;
+                return new Predicate(p.getName());
 
             }
 
