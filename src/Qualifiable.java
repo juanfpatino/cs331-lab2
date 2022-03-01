@@ -4,4 +4,7 @@ public interface Qualifiable {
 
     public void setName(String name);
 
+    @Override
+    public String toString();
+
 }

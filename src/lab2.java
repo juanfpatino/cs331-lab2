@@ -102,9 +102,10 @@ public class lab2 {
 
                 boolean adding = false; //true if we are adding something to this predicate
 
-                int charIdx = 0;
-                for (char c : word.toCharArray() //add variables/constants/funtions to this prediate
+                for (int charIdx = 0; charIdx < word.length(); charIdx++ //add variables/constants/funtions to this prediate
                 ) {
+
+                    char c = word.toCharArray()[charIdx];
 
                     if (c == '(') {
 
@@ -117,9 +118,12 @@ public class lab2 {
 
                             SkolemFunction sk = new SkolemFunction(String.valueOf(S).charAt(3));
 
-                            sk.setX(new Variable(String.valueOf(word.toCharArray()[charIdx+ 2] + "" +  word.toCharArray()[charIdx+3])));
+                            sk.setX(new Variable(String.valueOf(word.toCharArray()[charIdx+ 1] + "" +  word.toCharArray()[charIdx+2])));
+                            assert pred != null;
                             pred.qualify(sk);
                             adding = false;
+                            charIdx = charIdx + 2;
+                            S = new StringBuilder();
 
                         }
                         else{
@@ -146,6 +150,8 @@ public class lab2 {
 
                         adding = false;
                         assert pred != null;
+
+                        if(!String.valueOf(S).equals(""))
                         pred.qualify(KB.find(S.toString()));
 
                     }
@@ -156,7 +162,6 @@ public class lab2 {
 
                     }
 
-                    charIdx++;
 
                 }
 

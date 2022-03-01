@@ -47,7 +47,7 @@ public class Predicate {
 
             for (int i = 0; i < n; i++) {
 
-                s.append(terms.get(i).getName());
+                s.append(terms.get(i));
 
                 if(i != n - 1)s.append(","); //if not last term, add a comma separating
 
