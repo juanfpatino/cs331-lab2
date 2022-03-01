@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class KnowledgeBase {
 
-    private final ArrayList<Predicate> p = new ArrayList<>();
+    private final ArrayList<Predicate> p = new ArrayList<>(); //predicates should be immutable after being added
     private final ArrayList<Variable> v = new ArrayList<>();
     private final ArrayList<Constant> c = new ArrayList<>();
     private final ArrayList<SkolemFunction> skf = new ArrayList<>();
