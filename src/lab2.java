@@ -22,13 +22,97 @@ public class lab2 {
 
     }
 
-    public static boolean resolution(Scanner s){ //main resolution function
+    public static boolean resolution(Scanner s){ //rename later
 
         KnowledgeBase KB = new KnowledgeBase();
 
         DecodeKB(s, KB);
 
+        ArrayList<Clause> clauses = new ArrayList<>(); //disjunction of positive predicates
+
+        //for each predicate in each clause, negate it, turn it into a unary clause then add it to 'clauses'
+
+        for (Clause c: KB.getClauses()
+             ) {
+
+            for (Predicate p: c.getClause()
+                 ) {
+
+                p.negate();
+
+                Predicate[] negative_p = new Predicate[]{
+
+                    p
+
+                };
+
+                clauses.add(new Clause(negative_p));
+
+            }
+
+        }
+
+        ArrayList<Clause> NEW = new ArrayList<>();
+
+        int iterations = 0;
+
+        do { //while true do
+
+            for (Clause Ci : clauses //
+            ) {
+
+                for (Clause Cj: clauses
+                     ) {
+
+                    ArrayList<Clause> resolvents = resolve(KB.getClauses(), Ci, Cj);
+
+                    if (resolvents.size() == 0) return true;
+
+                    NEW.addAll(
+                            resolvents
+                    );
+
+                }
+
+
+            }
+
+            //if NEW is a subset of all clauses return false
+            if (isSubset(NEW, clauses)) return false;
+            //else
+            clauses.addAll(NEW); //clauses <-- clauses U NEW
+
+            iterations++;
+
+        } while (iterations <= 123456); //if this goes on for too long
+
+
         return true;
+
+    }
+
+    public static boolean isSubset(ArrayList<Clause> NEW, ArrayList<Clause> clauses){
+
+        //if everything in NEW is also in clauses
+
+        for (Clause n: NEW
+             ) {
+
+            if(!clauses.contains(n)) return false;
+
+        }
+
+        return true;
+
+    }
+
+    public static ArrayList<Clause> resolve(ArrayList<Clause> clauses, Clause Ci, Clause Cj){ //"while true do for each pair of clauses
+
+        ArrayList<Clause> temp = new ArrayList<>();
+
+
+
+        return temp;
 
     }
 

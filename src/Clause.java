@@ -1,6 +1,7 @@
 public class Clause {
 
     private Predicate[] clause; //disjunction of predicates
+    private boolean positive = true;
 
     public Clause(Predicate[] clause){
 
@@ -20,10 +21,22 @@ public class Clause {
 
     }
 
+    public void negate(){
+
+        this.positive = false;
+
+    }
+
+    public boolean isPositive() {
+        return positive;
+    }
+
     @Override
     public String toString() {
 
         StringBuilder s = new StringBuilder();
+
+        if(!positive) s.append("!");
 
         s.append("[");
 
