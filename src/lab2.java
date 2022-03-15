@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
@@ -5,11 +6,13 @@ import java.io.*;
 
 public class lab2 {
 
+    private static final ArrayList<Clause> clauses_seen = new ArrayList<>();
+
     public static void main(String[] args) throws IOException { //args[0] = KB.cnf
 
-        Scanner s = new Scanner(new File(args[0]));
+        Scanner S = new Scanner(new File(args[0]));
 
-        if(resolution(s)){
+        if(resolution(S)){
 
             System.out.println("yes");
 
@@ -22,97 +25,239 @@ public class lab2 {
 
     }
 
-    public static boolean resolution(Scanner s){ //rename later
+    public static boolean resolution(Scanner S){
 
         KnowledgeBase KB = new KnowledgeBase();
 
-        DecodeKB(s, KB);
+        DecodeKB(S, KB);
 
-        ArrayList<Clause> clauses = new ArrayList<>(); //disjunction of positive predicates
+        ArrayList<Clause> clauses = KB.getClauses(); //disjunction of positive predicates
 
-        //for each predicate in each clause, negate it, turn it into a unary clause then add it to 'clauses'
+        ArrayList<Clause> NEW = new ArrayList<>();
 
-        for (Clause c: KB.getClauses()
-             ) {
+        while(true){
 
-            for (Predicate p: c.getClause()
-                 ) {
+            for(int i = 0; i < clauses.size(); i++){
 
-                p.negate();
+                for(int j = 1; j < clauses.size(); j++){
 
-                Predicate[] negative_p = new Predicate[]{
+                    ArrayList<Clause> resolvents = resolve(clauses.get(i), clauses.get(j));
 
-                    p
+                    for (Clause c: resolvents
+                         ) {
 
-                };
+                        if(c.getClause().size() == 0) return false;
 
-                clauses.add(new Clause(negative_p));
+                    }
+
+                    boolean in = false;
+
+                    for (Clause c: resolvents){
+
+                        for (Clause s: clauses_seen
+                             ) {
+
+                            if(c.equals(s)) in = true;
+
+                        }
+
+                        if(!in) clauses_seen.add(c);
+                        in = false;
+
+                    }
+
+                    NEW.addAll(resolvents);
+
+
+                    boolean newFlag = false;
+
+                    for (Clause n: NEW
+                         ) {
+
+                        boolean newFlagClause = true;
+
+                        for (Clause c: KB.getClauses()
+                             ) {
+
+                            if(n.equals(c)){
+
+                                newFlagClause = false;
+                                break;
+
+                            }
+
+                        }
+
+                        if(newFlagClause) newFlag = true;
+
+                    }
+
+                    if(!newFlag){
+
+                        System.out.println("NOTHING NEW IS IN HERE!!!");
+                        return true;
+
+                    }
+                    //else
+
+                    for (Clause n: NEW
+                         ) {
+
+                        KB.addClause(n);
+
+                    }
+
+                }
 
             }
 
         }
 
-        ArrayList<Clause> NEW = new ArrayList<>();
-
-        int iterations = 0;
-
-        do { //while true do
-
-            for (Clause Ci : clauses //
-            ) {
-
-                for (Clause Cj: clauses
-                     ) {
-
-                    ArrayList<Clause> resolvents = resolve(KB.getClauses(), Ci, Cj);
-
-                    if (resolvents.size() == 0) return true;
-
-                    NEW.addAll(
-                            resolvents
-                    );
-
-                }
-
-
-            }
-
-            //if NEW is a subset of all clauses return false
-            if (isSubset(NEW, clauses)) return false;
-            //else
-            clauses.addAll(NEW); //clauses <-- clauses U NEW
-
-            iterations++;
-
-        } while (iterations <= 123456); //if this goes on for too long
-
-
-        return true;
-
     }
+
 
     public static boolean isSubset(ArrayList<Clause> NEW, ArrayList<Clause> clauses){
 
         //if everything in NEW is also in clauses
 
-        for (Clause n: NEW
-             ) {
 
-            if(!clauses.contains(n)) return false;
+        ArrayList<Predicate> NEWToPredicateArray = new ArrayList<>();
+
+        for (Clause n: NEW
+        ) {
+
+            NEWToPredicateArray.addAll(n.getClause());
 
         }
+
+        ArrayList<Predicate> clausesToPredicateArray = new ArrayList<>();
+
+
+        for (Clause c: clauses
+        ) {
+
+            clausesToPredicateArray.addAll(c.getClause());
+
+        }
+
+        for (Predicate n: NEWToPredicateArray
+        ) {
+
+            if(!clausesToPredicateArray.contains(n)) return false;
+
+        }
+
 
         return true;
 
     }
 
-    public static ArrayList<Clause> resolve(ArrayList<Clause> clauses, Clause Ci, Clause Cj){ //"while true do for each pair of clauses
+    public static boolean isSubset(Clause NEW, ArrayList<Clause> clauses){
 
-        ArrayList<Clause> temp = new ArrayList<>();
+        //if everything in NEW is also in clauses
 
 
+        ArrayList<Predicate> clausesToPredicateArray = new ArrayList<>();
 
-        return temp;
+
+        for (Clause c: clauses
+             ) {
+
+            clausesToPredicateArray.addAll(c.getClause());
+
+
+        }
+
+        for (Predicate n: NEW.getClause()
+             ) {
+
+            if(!clausesToPredicateArray.contains(n)) return false;
+
+        }
+
+
+        return true;
+
+    }
+
+    public static ArrayList<Clause> resolve(Clause Ci, Clause Cj){ //"while true do for each pair of clauses
+
+        ArrayList<Clause> resolvents = new ArrayList<>();
+
+        for (Predicate p1: Ci.getClause()
+             ) {
+
+            for (Predicate p2: Cj.getClause()
+                 ) {
+
+                if(p2.equals(p1) && !p2.negated().equals(p1.negated())){
+
+                    ArrayList<Predicate> newPredicates = new ArrayList<>();
+
+                    ArrayList<Predicate> newPredicate1 = Ci.getClause();
+
+
+                    //remove pred 1
+                    for (Predicate x: newPredicate1
+                         ) {
+
+                        if(x.equals(p1)){
+                            
+                            newPredicate1.remove(p1);
+                            
+                        }
+
+                    }
+
+                    ArrayList<Predicate> newPredicate2 = Cj.getClause();
+
+                    //remove pred 2
+                    for (Predicate x: newPredicate1
+                    ) {
+
+                        if(x.equals(p2)){
+
+                            newPredicate2.remove(p2);
+
+                        }
+
+                    }
+                    
+                    newPredicates.addAll(newPredicate1);
+                    newPredicates.addAll(newPredicate2);
+                    
+                    //deal w duplicates
+                    ArrayList<Predicate> seen = new ArrayList<>();
+
+                    for (Predicate p: newPredicates
+                         ) {
+                        
+                        if(!seen.contains(p)) seen.add(p);
+                        
+                    }
+
+                    //convert to Clause object
+                    Clause tempClause = new Clause(newPredicates);
+
+                    boolean seenForReal = false;
+
+                    for (Clause c: clauses_seen
+                         ) {
+
+                        if(isSubset(c, clauses_seen)) seenForReal = true;
+                        
+                    }
+
+                    if(!seenForReal) resolvents.add(tempClause);
+                    
+
+                }
+
+            }
+
+        }
+
+        return resolvents;
 
     }
 
@@ -253,7 +398,8 @@ public class lab2 {
                 predIDX++;
 
             }
-            KB.addClause(new Clause(p));
+
+            KB.addClause(new Clause(new ArrayList<>(List.of(p))));
 
             try{
 

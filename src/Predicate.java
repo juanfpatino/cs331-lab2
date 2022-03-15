@@ -32,6 +32,14 @@ public class Predicate {
 
     }
 
+    public Predicate negated(){
+
+        Predicate temp = new Predicate(this.getName());
+        temp.negate();
+        return temp;
+
+    }
+
     @Override
     public String toString() {
 
