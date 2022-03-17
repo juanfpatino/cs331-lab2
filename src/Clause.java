@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class Clause {
 
     public ArrayList<Predicate> getClause(){
 
-        return this.clause;
+        return new ArrayList<>(this.clause);
 
     }
 

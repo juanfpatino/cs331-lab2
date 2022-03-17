@@ -94,7 +94,7 @@ public class lab2 {
 
                     if(!newFlag){
 
-                        System.out.println("NOTHING NEW IS IN HERE!!!");
+                        //System.out.println("NOTHING NEW IS IN HERE!!!");
                         return true;
 
                     }

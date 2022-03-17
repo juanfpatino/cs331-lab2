@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Predicate {
 
@@ -38,6 +39,19 @@ public class Predicate {
         temp.negate();
         return temp;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Predicate predicate = (Predicate) o;
+        return positive == predicate.positive && Objects.equals(name, predicate.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, positive);
     }
 
     @Override
