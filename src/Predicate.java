@@ -28,12 +28,26 @@ public class Predicate {
 
     }
 
+    public void negate(){
+
+        positive = !positive;
+
+    }
+
     public Predicate negated(){
 
-        if(this.positive)
-        return new Predicate("!" + this.getName());
+        Predicate temp;
 
-        return new Predicate(this.getName());
+        if(this.positive){
+
+            temp = new Predicate("!" + this.getName());
+
+            return temp;
+
+        }
+
+        temp = new Predicate(this.getName());
+        return temp;
 
     }
 

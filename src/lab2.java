@@ -190,6 +190,8 @@ public class lab2 {
             for (Predicate p2: Cj.getClause()
                  ) {
 
+                Predicate what = p1.negated();
+
                 if(p2.getName().equals(p1.getName()) && !p2.negated().equals(p1.negated())){
 
                     ArrayList<Predicate> newPredicates = new ArrayList<>();
@@ -328,7 +330,7 @@ public class lab2 {
                 if (word.charAt(0) == '!') //positive
                 {
                     assert pred != null;
-                    pred = pred.negated();
+                    pred.negate();
                 }
 
                 StringBuilder S = new StringBuilder();
