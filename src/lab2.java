@@ -328,7 +328,7 @@ public class lab2 {
                 if (word.charAt(0) == '!') //positive
                 {
                     assert pred != null;
-                    pred.negate();
+                    pred = pred.negated();
                 }
 
                 StringBuilder S = new StringBuilder();

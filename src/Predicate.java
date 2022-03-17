@@ -20,11 +20,6 @@ public class Predicate {
 
     }
 
-    public void negate(){
-
-        positive = !positive;
-
-    }
 
     public void qualify(Qualifiable q){
 
@@ -35,9 +30,10 @@ public class Predicate {
 
     public Predicate negated(){
 
-        Predicate temp = new Predicate(this.getName());
-        temp.negate();
-        return temp;
+        if(this.positive)
+        return new Predicate("!" + this.getName());
+
+        return new Predicate(this.getName());
 
     }
 
