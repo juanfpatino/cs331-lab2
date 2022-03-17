@@ -28,6 +28,10 @@ public class Predicate {
 
     }
 
+    public ArrayList<Qualifiable> getTerms() {
+        return terms;
+    }
+
     public void negate(){
 
         positive = !positive;
@@ -42,11 +46,26 @@ public class Predicate {
 
             temp = new Predicate("!" + this.getName());
 
+            for (Qualifiable q: this.getTerms()
+                 ) {
+
+                temp.qualify(q);
+
+            }
+
             return temp;
 
         }
 
         temp = new Predicate(this.getName());
+
+        for (Qualifiable q: this.getTerms()
+        ) {
+
+            temp.qualify(q);
+
+        }
+
         return temp;
 
     }

@@ -68,48 +68,49 @@ public class lab2 {
 
                     NEW.addAll(resolvents);
 
+            }
 
-                    boolean newFlag = false;
+            }
 
-                    for (Clause n: NEW
-                         ) {
 
-                        boolean newFlagClause = true;
+            boolean newFlag = false;
 
-                        for (Clause c: KB.getClauses()
-                             ) {
+            for (Clause n: NEW
+            ) {
 
-                            if(n.equals(c)){
+                boolean newFlagClause = true;
 
-                                newFlagClause = false;
-                                break;
+                for (Clause c: KB.getClauses()
+                ) {
 
-                            }
+                    if(n.equals(c)){
 
-                        }
-
-                        if(newFlagClause) newFlag = true;
-
-                    }
-
-                    if(!newFlag){
-
-                        //System.out.println("NOTHING NEW IS IN HERE!!!");
-                        return true;
-
-                    }
-                    //else
-
-                    for (Clause n: NEW
-                         ) {
-
-                        KB.addClause(n);
+                        newFlagClause = false;
+                        break;
 
                     }
 
                 }
 
+                if(newFlagClause) newFlag = true;
+
             }
+
+            if(!newFlag){
+
+                //System.out.println("NOTHING NEW IS IN HERE!!!");
+                return true;
+
+            }
+            //else
+
+            for (Clause n: NEW
+            ) {
+
+                KB.addClause(n);
+
+            }
+
 
         }
 
@@ -200,15 +201,15 @@ public class lab2 {
 
 
                     //remove pred 1
-                    for (Predicate x: newPredicate1
-                         ) {
+                    for (int i = 0; i < newPredicate1.size(); i++
+                    ) {
+
+                        Predicate x = newPredicate1.get(i);
 
                         if(x.equals(p1)){
                             
                             newPredicate1.remove(p1);
-                            //hard code fix for now
-                            if(newPredicate1.size() == 0) break;
-                            
+
                         }
 
                     }
@@ -216,14 +217,14 @@ public class lab2 {
                     ArrayList<Predicate> newPredicate2 = Cj.getClause();
 
                     //remove pred 2
-                    for (Predicate x: newPredicate2
+                    for (int i = 0; i < newPredicate2.size(); i++
                     ) {
+
+                        Predicate x = newPredicate2.get(i);
 
                         if(x.equals(p2)){
 
                             newPredicate2.remove(p2);
-                            //hard code fix for now
-                            if(newPredicate2.size() == 0) break;
 
                         }
 
