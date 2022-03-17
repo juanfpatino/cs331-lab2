@@ -190,7 +190,7 @@ public class lab2 {
             for (Predicate p2: Cj.getClause()
                  ) {
 
-                if(p2.equals(p1) && !p2.negated().equals(p1.negated())){
+                if(p2.getName().equals(p1.getName()) && !p2.negated().equals(p1.negated())){
 
                     ArrayList<Predicate> newPredicates = new ArrayList<>();
 
@@ -204,6 +204,8 @@ public class lab2 {
                         if(x.equals(p1)){
                             
                             newPredicate1.remove(p1);
+                            //hard code fix for now
+                            if(newPredicate1.size() == 0) break;
                             
                         }
 
@@ -212,12 +214,14 @@ public class lab2 {
                     ArrayList<Predicate> newPredicate2 = Cj.getClause();
 
                     //remove pred 2
-                    for (Predicate x: newPredicate1
+                    for (Predicate x: newPredicate2
                     ) {
 
                         if(x.equals(p2)){
 
                             newPredicate2.remove(p2);
+                            //hard code fix for now
+                            if(newPredicate2.size() == 0) break;
 
                         }
 
