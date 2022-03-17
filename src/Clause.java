@@ -63,7 +63,7 @@ public class Clause {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Clause clause1 = (Clause) o;
-        return getClause().containsAll(clause1.getClause()) || clause1.getClause().containsAll(getClause());
+        return (getClause().containsAll(clause1.getClause()) || clause1.getClause().containsAll(getClause())) && clause.size() == clause1.getClause().size();
     }
 
     @Override

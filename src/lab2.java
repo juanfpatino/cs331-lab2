@@ -33,6 +33,8 @@ public class lab2 {
 
         ArrayList<Clause> clauses = KB.getClauses(); //disjunction of positive predicates
 
+        clauses_seen.addAll(clauses);
+
         ArrayList<Clause> NEW = new ArrayList<>();
 
         while(true){
@@ -52,38 +54,39 @@ public class lab2 {
 
                     boolean in = false;
 
-                    for (Clause c: resolvents){
+                    for (Clause x: resolvents){
 
-                        for (Clause s: clauses_seen
+                        for (Clause y: clauses_seen
                              ) {
 
-                            if(c.equals(s)) in = true;
+                            if(x.equals(y)) in = true;
 
                         }
 
-                        if(!in) clauses_seen.add(c);
+                        if(!in)
+                            clauses_seen.add(x);
                         in = false;
 
                     }
 
                     NEW.addAll(resolvents);
 
-            }
+                }
 
             }
 
 
             boolean newFlag = false;
 
-            for (Clause n: NEW
+            for (Clause x: NEW
             ) {
 
                 boolean newFlagClause = true;
 
-                for (Clause c: KB.getClauses()
+                for (Clause y: KB.getClauses()
                 ) {
 
-                    if(n.equals(c)){
+                    if(x.equals(y)){
 
                         newFlagClause = false;
                         break;
@@ -92,7 +95,8 @@ public class lab2 {
 
                 }
 
-                if(newFlagClause) newFlag = true;
+                if(newFlagClause)
+                    newFlag = true;
 
             }
 
@@ -191,8 +195,6 @@ public class lab2 {
             for (Predicate p2: Cj.getClause()
                  ) {
 
-                Predicate what = p1.negated();
-
                 if(p2.getName().equals(p1.getName()) && !p2.negated().equals(p1.negated())){
 
                     ArrayList<Predicate> newPredicates = new ArrayList<>();
@@ -244,14 +246,14 @@ public class lab2 {
                     }
 
                     //convert to Clause object
-                    Clause tempClause = new Clause(newPredicates);
+                    Clause tempClause = new Clause(seen); //newpreds
 
                     boolean seenForReal = false;
 
                     for (Clause c: clauses_seen
                          ) {
 
-                        if(isSubset(c, clauses_seen)) seenForReal = true;
+                        if(c.equals(tempClause)) seenForReal = true;
                         
                     }
 
