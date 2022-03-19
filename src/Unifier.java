@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Unifier {
 
@@ -17,21 +18,23 @@ public class Unifier {
         }
         else if(x instanceof Variable){
 
-
+            return unify_var((Variable) x, y, theta);
 
         }
         else if(y instanceof Variable){
 
-
+            return unify_var((Variable) y, x, theta);
 
         }
         else if(x instanceof Predicate && y instanceof Predicate){//COMPOUND?
 
-
+            return Unify(KB, x, y, (Objects.requireNonNull(Unify(KB, new Predicate((x).getName()), new Predicate((y).getName()), theta))) );
 
         }
         else if(x instanceof Clause && y instanceof Clause){ //LIST?
 
+            ArrayList<Predicate> List1 = ((Clause) x).getClause();
+            ArrayList<Predicate> List2 = ((Clause) y).getClause();
 
 
         }else{

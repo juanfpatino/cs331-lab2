@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Predicate {
+public class Predicate implements Qualifiable {
 
     public final String name;
     private int n; //n-ary predicate
@@ -17,6 +17,11 @@ public class Predicate {
     public String getName(){
 
         return this.name;
+
+    }
+
+    @Override
+    public void setName(String name) {
 
     }
 
