@@ -75,12 +75,13 @@ public class Predicate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Predicate predicate = (Predicate) o;
-        return positive == predicate.positive && Objects.equals(name, predicate.name);
+        return positive == predicate.positive && Objects.equals(name, predicate.name)
+                && (getTerms().equals(predicate.getTerms()));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, positive);
+        return Objects.hash(name, positive, getTerms());
     }
 
     @Override
