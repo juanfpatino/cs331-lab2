@@ -20,12 +20,6 @@ public class Predicate implements Qualifiable {
 
     }
 
-    @Override
-    public void setName(String name) {
-
-    }
-
-
     public void qualify(Qualifiable q){
 
         this.terms.add(q);

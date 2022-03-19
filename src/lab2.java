@@ -253,7 +253,10 @@ public class lab2 {
                     for (Clause c: clauses_seen
                          ) {
 
-                        if(c.equals(tempClause)) seenForReal = true;
+                        if (c.equals(tempClause)) {
+                            seenForReal = true;
+                            break;
+                        }
                         
                     }
 

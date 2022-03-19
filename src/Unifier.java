@@ -1,12 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class Unifier {
 
-    public static List<? extends Qualifiable> Unify(KnowledgeBase KB, Qualifiable x, Qualifiable y, List<? extends Qualifiable> theta){
+    public static HashMap<Variable, Qualifiable> Unify(Qualifiable x, Qualifiable y, HashMap<Variable, Qualifiable> theta){
 
-        if(theta.get(0).getName().equals("failure")){ //how we indicate failure
+        if(theta.containsKey(new Variable("failure"))){ //how we indicate failure
 
             return theta;
 
@@ -28,31 +29,84 @@ public class Unifier {
         }
         else if(x instanceof Predicate && y instanceof Predicate){//COMPOUND?
 
-            return Unify(KB, x, y, (Objects.requireNonNull(Unify(KB, new Predicate((x).getName()), new Predicate((y).getName()), theta))) );
+            return Unify(x, y, (Objects.requireNonNull(Unify(new Predicate((x).getName()), new Predicate((y).getName()), theta))) );
 
         }
         else if(x instanceof Clause && y instanceof Clause){ //LIST?
 
-            ArrayList<Predicate> List1 = ((Clause) x).getClause();
-            ArrayList<Predicate> List2 = ((Clause) y).getClause();
+            ArrayList<Predicate> list1 = ((Clause) x).getClause();
+            ArrayList<Predicate> list2 = ((Clause) y).getClause();
+
+            Qualifiable arg1 = null;
+            Qualifiable arg2;
+
+            if(list1.size() == 2){
+
+                arg1 = list1.get(1);
+
+            }
+            else{
+
+                list1.remove(0);
+                arg1 = new Clause(list1);
+
+            }
+
+            if(list2.size()==2){
+
+                arg2 = list1.get(1);
+
+            }
+            else{
+
+                list2.remove(0);
+                arg2 = new Clause(list2);
+
+            }
+
+            return Unify(arg1, arg2, Objects.requireNonNull(Unify(list1.get(0), list2.get(0), theta)));
 
 
         }else{
 
-            ArrayList<Constant> failure = new ArrayList<>();
-
-            Constant f = new Constant("failure");
-            failure.add(f);
-            return failure;
+            return failure();
 
         }
 
         return null;
     }
 
-    private static List<? extends Qualifiable> unify_var(Variable v, Qualifiable x, List<? extends Qualifiable> theta){
+    private static HashMap<Variable, Qualifiable> unify_var(Variable v, Qualifiable x, HashMap<Variable, Qualifiable> theta){
 
-        return null;
+        for (Qualifiable z: theta.values()
+             ) {
+
+            if(z.equals(v)) return Unify(z, x, theta);
+
+        }
+        for (Qualifiable z: theta.values()
+        ) {
+
+            if(z.equals(x)) return Unify(v, x, theta);
+
+        }
+        for(Qualifiable z: theta.values()
+        ){
+
+
+        }
+
+        theta.put(v, x);
+        return theta;
+
+    }
+
+    private static HashMap<Variable, Qualifiable> failure(){
+
+        HashMap<Variable, Qualifiable> failure = new HashMap<>();
+        Variable f = new Variable("failure");
+        failure.put(f, null);
+        return failure;
 
     }
 

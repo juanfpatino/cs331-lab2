@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Clause {
+public class Clause implements Qualifiable{
 
     private ArrayList<Predicate> clause; //disjunction of predicates
     private boolean positive = true;
@@ -34,6 +34,11 @@ public class Clause {
 
     public boolean isPositive() {
         return positive;
+    }
+
+    @Override
+    public String getName() {
+        return toString();
     }
 
     @Override
