@@ -7,7 +7,7 @@ public class Unifier {
 
     public static HashMap<Variable, Qualifiable> Unify(Qualifiable x, Qualifiable y, HashMap<Variable, Qualifiable> theta){
 
-        if(theta.containsKey(new Variable("failure"))){ //how we indicate failure
+        if(theta != null && theta.containsKey(new Variable("failure"))){ //how we indicate failure
 
             return theta;
 
@@ -29,7 +29,7 @@ public class Unifier {
         }
         else if(x instanceof Predicate && y instanceof Predicate){//COMPOUND?
 
-            return Unify(x, y, (Objects.requireNonNull(Unify(new Predicate((x).getName()), new Predicate((y).getName()), theta))) );
+            return Unify(x, y, ((Unify(new Predicate((x).getName()), new Predicate((y).getName()), theta))) );
 
         }
         else if(x instanceof Clause && y instanceof Clause){ //LIST?
@@ -37,7 +37,7 @@ public class Unifier {
             ArrayList<Predicate> list1 = ((Clause) x).getClause();
             ArrayList<Predicate> list2 = ((Clause) y).getClause();
 
-            Qualifiable arg1 = null;
+            Qualifiable arg1;
             Qualifiable arg2;
 
             if(list1.size() == 2){
@@ -64,16 +64,14 @@ public class Unifier {
 
             }
 
-            return Unify(arg1, arg2, Objects.requireNonNull(Unify(list1.get(0), list2.get(0), theta)));
+            return Unify(arg1, arg2, (Unify(list1.get(0), list2.get(0), theta)));
 
-
-        }else{
-
-            return failure();
 
         }
 
-        return null;
+        //else
+        return failure();
+
     }
 
     private static HashMap<Variable, Qualifiable> unify_var(Variable v, Qualifiable x, HashMap<Variable, Qualifiable> theta){
@@ -94,6 +92,7 @@ public class Unifier {
         ){
 
 
+
         }
 
         theta.put(v, x);
@@ -101,7 +100,7 @@ public class Unifier {
 
     }
 
-    private static HashMap<Variable, Qualifiable> failure(){
+    public static HashMap<Variable, Qualifiable> failure(){
 
         HashMap<Variable, Qualifiable> failure = new HashMap<>();
         Variable f = new Variable("failure");

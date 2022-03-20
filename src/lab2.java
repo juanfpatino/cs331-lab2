@@ -43,6 +43,7 @@ public class lab2 {
 
                 for(int j = 1; j < clauses.size(); j++){
 
+
                     ArrayList<Clause> resolvents = resolve(clauses.get(i), clauses.get(j));
 
                     for (Clause c: resolvents
@@ -102,7 +103,6 @@ public class lab2 {
 
             if(!newFlag){
 
-                //System.out.println("NOTHING NEW IS IN HERE!!!");
                 return true;
 
             }
@@ -195,6 +195,9 @@ public class lab2 {
             for (Predicate p2: Cj.getClause()
                  ) {
 
+                //HashMap<Variable, Qualifiable> theta = Unifier.Unify(p1, p2, null);
+
+
                 if(p2.getName().equals(p1.getName()) && !p2.negated().equals(p1.negated())){
 
                     ArrayList<Predicate> newPredicates = new ArrayList<>();
@@ -231,7 +234,18 @@ public class lab2 {
                         }
 
                     }
-                    
+
+                  //  if(theta.equals(Unifier.failure())){
+
+                  //      continue;
+
+                 //   }
+                 //   else{
+
+                 //       replace(theta, newPredicate1, newPredicate2);
+
+                 //   }
+
                     newPredicates.addAll(newPredicate1);
                     newPredicates.addAll(newPredicate2);
                     
@@ -271,6 +285,52 @@ public class lab2 {
 
         return resolvents;
 
+    }
+
+    private static void replace(HashMap<Variable, Qualifiable> theta, ArrayList<Predicate> newPredicate1, ArrayList<Predicate> newPredicate2) {
+        for (Variable x: theta.keySet()
+             ) {
+
+            for (Predicate y: newPredicate1
+                 ) {
+
+                for (Qualifiable g: y.getTerms()
+                     ) {
+
+                    if(g instanceof Variable){
+
+                        if(g.equals(x)){//replace variable in y with constant/sklf
+
+                            y.replace((Variable) g, theta.get(g));
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            for (Predicate y: newPredicate2
+            ) {
+
+                for (Qualifiable g: y.getTerms()
+                ) {
+
+                    if(g instanceof Variable){
+
+                        if(g.equals(x)){//replace variable in y with constant/sklf
+
+                            y.replace((Variable) g, theta.get(g));
+
+                        }
+
+                    }
+
+                }
+
+            }
+        }
     }
 
     private static void DecodeKB(Scanner s, KnowledgeBase KB) {

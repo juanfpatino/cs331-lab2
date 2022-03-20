@@ -14,6 +14,33 @@ public class Predicate implements Qualifiable {
 
     }
 
+    public void replace(Variable v, Qualifiable y){
+
+        ArrayList<Qualifiable> temp = new ArrayList<>();
+
+        int i = 0;
+        for (Qualifiable q: getTerms()
+             ) {
+
+            if(q.equals(v)) {
+
+                temp.add(y);
+
+            }
+            else{
+
+                temp.add(getTerms().get(i));
+
+            }
+            i++;
+
+
+        }
+
+
+
+    }
+
     public String getName(){
 
         return this.name;
